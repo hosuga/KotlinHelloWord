@@ -16,19 +16,10 @@ class MainActivity : AppCompatActivity() {
         val editText = findViewById<EditText>(R.id.edit_text) as EditText
         val button = findViewById<Button>(R.id.button) as Button
 
-        var name: String? = null
+
         button.setOnClickListener {
-            val userName = editText.getText().toString()
-            if (!isEmpty(userName.trim())) {
-                name = userName
-            } else {
-                name = WORLD
-            }
+            val name = editText.getText().toString()
             textView.setText("Hello $name!")
         }
-    }
-
-    companion object {
-        const val WORLD: String = "World"
     }
 }
