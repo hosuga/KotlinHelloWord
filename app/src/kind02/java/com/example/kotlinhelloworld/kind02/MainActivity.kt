@@ -10,6 +10,12 @@ import android.widget.Button
 import com.example.kotlinhelloworld.R
 
 class MainActivity : AppCompatActivity() {
+    val ERROR_MESSAGES = mapOf(
+        "ERROR_TITLE" to "ERROR!",
+        "EMPTY_VALUE" to "名前を入力して下さい。",
+        "TOO_LONG_NAME" to "10文字以内で入力して下さい。"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,28 +26,25 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button) as Button
 
         button.setOnClickListener {
-            var name = WORLD
-            val userName = editText.getText().toString()
-            if (!isEmpty(userName.trim())) {
-                if (validate(userName)) {
-                    name = userName
-                }
-            }
-            textView.setText("Hello $name!")
+            val name = editText.getText().toString()
+            if (validate(name)) textView.setText("Hello $name!")
         }
     }
 
-    companion object {
-        const val WORLD: String = "World"
-        val ERROR_MESSAGES = mapOf("ERROR_TITLE" to "ERROR!", "TOO_LONG_NAME" to "10文字以内で入力して下さい。")
-    }
-
-    private fun validate(userName : String) : Boolean{
-        if(userName.length > 10){
+    private fun validate(name : String) :Boolean {
+        if (isEmpty(name.trim())) {
+            AlertDialog.Builder(this)
+                .setTitle(ERROR_MESSAGES["ERROR_TITLE"])
+                .setMessage(ERROR_MESSAGES["EMPTY_VALUE"])
+                .setPositiveButton("OK"){ _, _ -> }
+                .show()
+            return false
+        }
+        if (name.length > 10) {
             AlertDialog.Builder(this)
                 .setTitle(ERROR_MESSAGES["ERROR_TITLE"])
                 .setMessage(ERROR_MESSAGES["TOO_LONG_NAME"])
-                .setPositiveButton("OK"){ dialog, which -> }
+                .setPositiveButton("OK"){ _, _ -> }
                 .show()
             return false
         }

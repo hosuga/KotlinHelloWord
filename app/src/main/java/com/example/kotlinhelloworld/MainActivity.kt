@@ -18,16 +18,8 @@ class MainActivity : AppCompatActivity() {
 
 
         button.setOnClickListener {
-            var name = WORLD
-            val userName = editText.getText().toString()
-            if (!isEmpty(userName.trim())) {
-                name = userName
-            }
+            val name = editText.getText().toString()
             textView.setText("Hello $name!")
         }
-    }
-
-    companion object {
-        const val WORLD: String = "World"
     }
 }
